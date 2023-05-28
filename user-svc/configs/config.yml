@@ -1,0 +1,18 @@
+port: ":8082"
+
+db:
+  host: "localhost"
+  port: "5433"
+  username: "postgres"
+  password: "password"
+  dbname: "postgres"
+  sslmode: "disable"
+
+credentials_path: "./credentials.json"
+
+signing_key: "jj@&48w3#ksSFpawd!W@SODFDKsskdajwdfgvc@%56ds"
+
+google:
+  clientID: "510239907988-rvkr6rj5eqssdr1f6q5o540gna27gnjj.apps.googleusercontent.com"
+  clientSecret: "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"
+
