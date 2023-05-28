@@ -1,0 +1,1012 @@
+{
+	"info": {
+		"_postman_id": "0735767e-c94c-41ef-9007-dd4d940ee4fb",
+		"name": "API",
+		"description": "Коллекция для обращению к api-gateway для микросервисов. Чтобы использовать методы заказов нужно будет пройти аутентификацию/авторизацию и регистрацию (если она не пройдена), после этого нужно последний полученный jwt поместить в хедер авторизации \"Authorization\", это делается в вкладке Authorization у коллекции (API), а также показано снизу. При желании также можно настроить глобальну переменную user_1_jwt",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27149950",
+		"_collection_link": "https://dark-meadow-298813.postman.co/workspace/go-mSvc-gRPC~fdcabfc6-643f-4686-b93c-07b46fcce3aa/collection/27149950-0735767e-c94c-41ef-9007-dd4d940ee4fb?action=share&creator=27149950&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IjYwODNkZDU5ODE2NzNmNjYxZmRlOWRhZTY0NmI2ZjAzODBhMDE0NWMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0MDc0MDg3MTgxOTIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI0MDc0MDg3MTgxOTIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDk5NDU5MzY5NDExMjkyMzA0MjEiLCJlbWFpbCI6ImJpZ2Jvc3M5MDkxMkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImQwR2lHQ3JGYUJDZV96eTNRNW0wQ1EiLCJpYXQiOjE2ODYwNzYyNTIsImV4cCI6MTY4NjA3OTg1Mn0.UArn6-iLgjyd9t_Eis-Y0aTOb0ic7AUUEGjnOK1QKTuSnBATI73Lgz6uIUy1S1PH6re8Hfmq-8R1RokbsLRSuNMKy96q1TfkUmtOsEx9pVJ2iwso-qufK9j_A3_iIuijEkLiZ8vT02FuK-JGEffTbPA4420RaRiWPxpA-sbWZG2tRmcQ9b_50e32uFAONg5Uw-F0GAOkesS8_s1WLZaMNtNqunmMxX3KdHnb-ZparvHCW6fxy2yIfyGLVMGkp-K5it1n95h_kMK1KkHHrz4DYc0ZU4CjudywBOq9M1-bpftY2P4L2ToD5AfjnH7s6lUwbS-K5ZWGT_zj5Vw\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auth/start/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"start",
+						""
+					]
+				},
+				"description": "### OAuth2 авторизация\n\nВ обмен на id_token из Google Sing-In возвращает корректный jwt токен для пользователя.  \nid_token можно получить на сайте для тестирования от Google: [https://developers.google.com/oauthplayground/](https://developers.google.com/oauthplayground/Выданный)  \n\nВыданный токен может быть авторизационным, если пользователь не прошел авторизацию, в таком случае, ему нужно зарегистрирвоаться с помощью sign_up, чтобы пользоваться API"
+			},
+			"response": [
+				{
+					"name": "успешная авторизация",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"id_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IjYwODNkZDU5ODE2NzNmNjYxZmRlOWRhZTY0NmI2ZjAzODBhMDE0NWMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0MDc0MDg3MTgxOTIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI0MDc0MDg3MTgxOTIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDk5NDU5MzY5NDExMjkyMzA0MjEiLCJlbWFpbCI6ImJpZ2Jvc3M5MDkxMkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImQwR2lHQ3JGYUJDZV96eTNRNW0wQ1EiLCJpYXQiOjE2ODYwNzYyNTIsImV4cCI6MTY4NjA3OTg1Mn0.UArn6-iLgjyd9t_Eis-Y0aTOb0ic7AUUEGjnOK1QKTuSnBATI73Lgz6uIUy1S1PH6re8Hfmq-8R1RokbsLRSuNMKy96q1TfkUmtOsEx9pVJ2iwso-qufK9j_A3_iIlH6neJzuijEkLiZ8vT02FuK-JGEffTbPA4420RaRiWPxpA-sbWZG2tRmcQ9b_50e32uFAONg5Uw-F0GAOkesS8_s1WLZaMNtNqunmMxX3KdHnb-ZparvHCW6fxy2yIfyGLVMGkp-K5it1n95h_kMK1KkHHrz4DYc0ZU4CjudywBOq9M1-bpftY2P4L2ToD5AfjnH7s6lUwbS-K5ZWGT_zj5Vw\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/start/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"start",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:34:46 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "265"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"jwt\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTY5MDMyODYsInVzZXJfaWQiOiJiNmJjYTZmMC0xMzAzLTQyYTMtYjhkMS02ZmU1YTBkMmNkODgiLCJpc19yZWdpc3RlcmVkIjp0cnVlLCJyb2xlIjoibWFuYWdlciJ9.fsJ_ZS1s8fHmEdmDaaSX_IObo6GY40JV-g_yh8bmdRs\",\n    \"is_registered\": true\n}"
+				},
+				{
+					"name": "авторизация с неправильным токеном",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"id_token\": \"eyJhbGciOiJSUzI1NiIsImtpZCI6IjYwODNkZDU5ODE2NzNmNjYxZmRlOWRhZTY0NmI2ZjAzODBhMDE0NWMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0MDc0MDg3MTgxOTIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI0MDc0MDg3MTgxOTIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDk5NDU5MzY5NDExMjkyMzA0MjEiLCJlbWFpbCI6ImJpZ2Jvc3M5MDkxMkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImQwR2lHQ3JGYUJDZV96eTNRNW0wQ1EiLCJpYXQiOjE2ODYwNzYyNTIsImV4cCI6MTY4NjA3OTg1Mn0.UArn6-iLgjyd9t_Eis-Y0aTOb0ic7AUUEGjnOK1QKTuSnBATI73Lgz6uIUy1S1PH6re8Hfmq-8R1RokbsLRSuNMKy96q1TfkUmtOsEx9pVJ2iwso-qufK9j_A3_iIuijEkLiZ8vT02FuK-JGEffTbPA4420RaRiWPxpA-sbWZG2tRmcQ9b_50e32uFAONg5Uw-F0GAOkesS8_s1WLZaMNtNqunmMxX3KdHnb-ZparvHCW6fxy2yIfyGLVMGkp-K5it1n95h_kMK1KkHHrz4DYc0ZU4CjudywBOq9M1-bpftY2P4L2ToD5AfjnH7s6lUwbS-K5ZWGT_zj5Vw\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/start/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"start",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:40:05 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "38"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 401,\n    \"error\": \"token invalid\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Регистрация Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"jwt_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTY5MDM0MjMsInVzZXJfaWQiOiIyMmUxNzU2My0yZTAzLTQ2OGItYjQzOS1iNjNhYjIxZmQ5NjAiLCJpc19yZWdpc3RlcmVkIjp0cnVlLCJyb2xlIjoiZGVmYXVsdCJ9.gsrzR1CyFabOkqUdAxQ4B3kSrmAVjwHmdXl45AEY4mQ\", \"nickname\": \"Deafult User\", \"username\": \"user_2\", \"role\": \"default\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auth/sign_up/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"sign_up",
+						""
+					]
+				},
+				"description": "Метод регистрации пользователя. Получает на вход регистрациионый jwt токент из Авторизации. Выдает пользователью jwt токен доступа, который надо будет поместить в Header авторизации: \"Authorization\".\n\nНикнейм и юзернейм допускают только латинские буквы и символы '_', и точку. Никнейм может содержать заглавные буквы и пробелы. Юзернейм уникальный. Роль может быть \"default\" и \"manager\"."
+			},
+			"response": [
+				{
+					"name": "Первая регистрация",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"jwt_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTY5MDMyODYsInVzZXJfaWQiOiIyMmUxNzU2My0yZTAzLTQ2OGItYjQzOS1iNjNhYjIxZmQ5NjAiLCJpc19yZWdpc3RlcmVkIjpmYWxzZSwicm9sZSI6ImRlZmF1bHQifQ.mN-L_q37z_uY9cBSqEjX8hCdLjpc-lTNxAdP8InY-Yo\", \"nickname\": \"Deafult User\", \"username\": \"user_2\", \"role\": \"default\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/sign_up/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"sign_up",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:37:03 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "408"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"jwt\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTY5MDM0MjMsInVzZXJfaWQiOiIyMmUxNzU2My0yZTAzLTQ2OGItYjQzOS1iNjNhYjIxZmQ5NjAiLCJpc19yZWdpc3RlcmVkIjp0cnVlLCJyb2xlIjoiZGVmYXVsdCJ9.gsrzR1CyFabOkqUdAxQ4B3kSrmAVjwHmdXl45AEY4mQ\",\n    \"id\": \"22e17563-2e03-468b-b439-b63ab21fd960\",\n    \"gmail\": \"kiselev.contact@gmail.com\",\n    \"username\": \"user_2\",\n    \"nickname\": \"Deafult User\",\n    \"is_registered\": true,\n    \"role\": \"default\"\n}"
+				},
+				{
+					"name": "Повторная регистрация с тем же авторизационным токеном",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"jwt_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTY5MDMyODYsInVzZXJfaWQiOiIyMmUxNzU2My0yZTAzLTQ2OGItYjQzOS1iNjNhYjIxZmQ5NjAiLCJpc19yZWdpc3RlcmVkIjpmYWxzZSwicm9sZSI6ImRlZmF1bHQifQ.mN-L_q37z_uY9cBSqEjX8hCdLjpc-lTNxAdP8InY-Yo\", \"nickname\": \"Deafult User\", \"username\": \"user_2\", \"role\": \"default\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/sign_up/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"sign_up",
+								""
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:38:16 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "38"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 401,\n    \"error\": \"token invalid\"\n}"
+				},
+				{
+					"name": "Повторая регистрация с новым токеном",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"jwt_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MTY5MDM0MjMsInVzZXJfaWQiOiIyMmUxNzU2My0yZTAzLTQ2OGItYjQzOS1iNjNhYjIxZmQ5NjAiLCJpc19yZWdpc3RlcmVkIjp0cnVlLCJyb2xlIjoiZGVmYXVsdCJ9.gsrzR1CyFabOkqUdAxQ4B3kSrmAVjwHmdXl45AEY4mQ\", \"nickname\": \"Deafult User\", \"username\": \"user_2\", \"role\": \"default\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/auth/sign_up/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"auth",
+								"sign_up",
+								""
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:40:00 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "48"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 400,\n    \"error\": \"user already registered\"\n}"
+				}
+			]
+		},
+		{
+			"name": "user/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/user/b6bca6f0-1303-42a3-b8d1-6fe5a0d2cd88",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"user",
+						"b6bca6f0-1303-42a3-b8d1-6fe5a0d2cd88"
+					]
+				},
+				"description": "Метод получения информации о пользователе. Нужно прикрепить id в url. Id будет получен после регистрации. В других методах id пользователя берется из jwt в Заголовке."
+			},
+			"response": [
+				{
+					"name": "Информация о пользователе",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/user/b6bca6f0-1303-42a3-b8d1-6fe5a0d2cd88",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"user",
+								"b6bca6f0-1303-42a3-b8d1-6fe5a0d2cd88"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:41:55 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "176"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"id\": \"b6bca6f0-1303-42a3-b8d1-6fe5a0d2cd88\",\n    \"gmail\": \"bigboss90912@gmail.com\",\n    \"username\": \"ababism\",\n    \"nickname\": \"Kiselev I.A.\",\n    \"is_registered\": true,\n    \"role\": \"manager\"\n}"
+				}
+			]
+		},
+		{
+			"name": "order/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"special_requests\": \"first order\",\n    \"dishes\": [\n        {\n            \"id\": \"90c193c8-9f23-4c3d-bcff-6963bbc37034\",\n            \"quantity\": 1\n        },\n        {\n            \"id\": \"828b72c6-a397-445b-af92-62cebe548491\",\n            \"quantity\": 1\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/order/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"order",
+						"create"
+					]
+				},
+				"description": "Создание заказа. Принимает на вход специальные указания и массив uuid блюд (из меню) и их количества"
+			},
+			"response": [
+				{
+					"name": "Создание заказа",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"special_requests\": \"second order\",\n    \"dishes\": [\n        {\n            \"id\": \"90c193c8-9f23-4c3d-bcff-6963bbc37034\",\n            \"quantity\": 1\n        },\n        {\n            \"id\": \"828b72c6-a397-445b-af92-62cebe548491\",\n            \"quantity\": 1\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/order/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"order",
+								"create"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:39:35 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "957"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"id\": \"e9eb4f43-1bce-4a52-8e73-806e8977e5f7\",\n    \"dishes\": [\n        {\n            \"id\": \"90c193c8-9f23-4c3d-bcff-6963bbc37034\",\n            \"name\": \"Carbonara\",\n            \"description\": \"Traditional pasta (Spaghetti or Penne) with eggs, pecorino romano cheese, guanciale and black pepper\",\n            \"price\": 15.99,\n            \"quantity\": 1,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 128558000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281538,\n                \"nanos\": 953435000\n            }\n        },\n        {\n            \"id\": \"828b72c6-a397-445b-af92-62cebe548491\",\n            \"name\": \"Caprese Salad\",\n            \"description\": \"Tomatoes, mozzarella, and fresh basil salad\",\n            \"price\": 9.99,\n            \"quantity\": 1,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 128558000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281538,\n                \"nanos\": 953435000\n            }\n        }\n    ],\n    \"user_id\": \"b6bca6f0-1303-42a3-b8d1-6fe5a0d2cd88\",\n    \"order_status\": \"pending\",\n    \"special_requests\": \"second order\",\n    \"ready_at\": {\n        \"seconds\": 1685281583,\n        \"nanos\": 824266000\n    },\n    \"created_at\": {\n        \"seconds\": 1685281538,\n        \"nanos\": 945694000\n    },\n    \"updated_at\": {\n        \"seconds\": 1685281538,\n        \"nanos\": 953435000\n    }\n}"
+				},
+				{
+					"name": "Заказ удаленного блюда",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"special_requests\": \"third order\",\n    \"dishes\": [\n        {\n            \"id\": \"a6244796-4f86-4082-bb4d-bfbbc2586730\",\n            \"quantity\": 1\n        },\n        {\n            \"id\": \"828b72c6-a397-445b-af92-62cebe548491\",\n            \"quantity\": 1\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/order/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"order",
+								"create"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 14:06:23 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "34"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 400,\n    \"error\": \"not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "order/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/order/401e2d68-86b3-4620-a095-7a0cba61df21",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"order",
+						"401e2d68-86b3-4620-a095-7a0cba61df21"
+					]
+				},
+				"description": "Вывод информации о заказе по его uuid. Когда заказ приготовится \"order_status\" станет \"ready\""
+			},
+			"response": [
+				{
+					"name": "Информация о еще не готовом заказе",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/order/e9eb4f43-1bce-4a52-8e73-806e8977e5f7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"order",
+								"e9eb4f43-1bce-4a52-8e73-806e8977e5f7"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:40:27 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "957"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"id\": \"e9eb4f43-1bce-4a52-8e73-806e8977e5f7\",\n    \"dishes\": [\n        {\n            \"id\": \"90c193c8-9f23-4c3d-bcff-6963bbc37034\",\n            \"name\": \"Carbonara\",\n            \"description\": \"Traditional pasta (Spaghetti or Penne) with eggs, pecorino romano cheese, guanciale and black pepper\",\n            \"price\": 15.99,\n            \"quantity\": 1,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 128558000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281538,\n                \"nanos\": 953435000\n            }\n        },\n        {\n            \"id\": \"828b72c6-a397-445b-af92-62cebe548491\",\n            \"name\": \"Caprese Salad\",\n            \"description\": \"Tomatoes, mozzarella, and fresh basil salad\",\n            \"price\": 9.99,\n            \"quantity\": 1,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 128558000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281538,\n                \"nanos\": 953435000\n            }\n        }\n    ],\n    \"user_id\": \"b6bca6f0-1303-42a3-b8d1-6fe5a0d2cd88\",\n    \"order_status\": \"pending\",\n    \"special_requests\": \"second order\",\n    \"ready_at\": {\n        \"seconds\": 1685281583,\n        \"nanos\": 824266000\n    },\n    \"created_at\": {\n        \"seconds\": 1685281538,\n        \"nanos\": 945694000\n    },\n    \"updated_at\": {\n        \"seconds\": 1685281538,\n        \"nanos\": 953435000\n    }\n}"
+				},
+				{
+					"name": "Информация о готовом заказе",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/order/e9eb4f43-1bce-4a52-8e73-806e8977e5f7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"order",
+								"e9eb4f43-1bce-4a52-8e73-806e8977e5f7"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:46:56 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "955"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"id\": \"e9eb4f43-1bce-4a52-8e73-806e8977e5f7\",\n    \"dishes\": [\n        {\n            \"id\": \"90c193c8-9f23-4c3d-bcff-6963bbc37034\",\n            \"name\": \"Carbonara\",\n            \"description\": \"Traditional pasta (Spaghetti or Penne) with eggs, pecorino romano cheese, guanciale and black pepper\",\n            \"price\": 15.99,\n            \"quantity\": 1,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 128558000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281538,\n                \"nanos\": 953435000\n            }\n        },\n        {\n            \"id\": \"828b72c6-a397-445b-af92-62cebe548491\",\n            \"name\": \"Caprese Salad\",\n            \"description\": \"Tomatoes, mozzarella, and fresh basil salad\",\n            \"price\": 9.99,\n            \"quantity\": 1,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 128558000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281538,\n                \"nanos\": 953435000\n            }\n        }\n    ],\n    \"user_id\": \"b6bca6f0-1303-42a3-b8d1-6fe5a0d2cd88\",\n    \"order_status\": \"ready\",\n    \"special_requests\": \"second order\",\n    \"ready_at\": {\n        \"seconds\": 1685281583,\n        \"nanos\": 824266000\n    },\n    \"created_at\": {\n        \"seconds\": 1685281538,\n        \"nanos\": 945694000\n    },\n    \"updated_at\": {\n        \"seconds\": 1685281616,\n        \"nanos\": 806345000\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "dish/:menu",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/dish/menu?limit=50&offset=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"dish",
+						"menu"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "50"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						}
+					]
+				},
+				"description": "Меню из всех блюд, включая недоступные"
+			},
+			"response": [
+				{
+					"name": "Меню",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/dish/menu?limit=50&offset=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"dish",
+								"menu"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "50"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:46:15 GMT"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"dishes\": [\n        {\n            \"id\": \"4e3ce8d6-a5b5-4b6c-b3ba-bed164eeda7c\",\n            \"name\": \"Bruschetta\",\n            \"description\": \"Toasted bread topped with garlic, tomatoes, and basil\",\n            \"price\": 7.99,\n            \"quantity\": 20,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 150935000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 150935000\n            }\n        },\n        {\n            \"id\": \"828b72c6-a397-445b-af92-62cebe548491\",\n            \"name\": \"Caprese Salad\",\n            \"description\": \"Tomatoes, mozzarella, and fresh basil salad\",\n            \"price\": 9.99,\n            \"quantity\": 1,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 128558000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281538,\n                \"nanos\": 953435000\n            }\n        },\n        {\n            \"id\": \"90c193c8-9f23-4c3d-bcff-6963bbc37034\",\n            \"name\": \"Carbonara\",\n            \"description\": \"Traditional pasta (Spaghetti or Penne) with eggs, pecorino romano cheese, guanciale and black pepper\",\n            \"price\": 15.99,\n            \"quantity\": 8,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 128558000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281538,\n                \"nanos\": 953435000\n            }\n        },\n        {\n            \"id\": \"4a855a27-e440-439b-bcac-d086491e62df\",\n            \"name\": \"Lasagna\",\n            \"description\": \"Oven-baked pasta dish with layers of pasta, ragu alla bolognese, and cheese\",\n            \"price\": 16.99,\n            \"quantity\": 1,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 150935000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 150935000\n            }\n        },\n        {\n            \"id\": \"fdd70942-afe0-474a-8ed1-520cf2c5e480\",\n            \"name\": \"Margherita Pizza\",\n            \"description\": \"San marzano tomato sauce, mozzarella and basil\",\n            \"price\": 12.99,\n            \"quantity\": 10,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 150935000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 150935000\n            }\n        },\n        {\n            \"id\": \"68a19e60-1784-4b1c-b996-268109756854\",\n            \"name\": \"Minestrone Soup\",\n            \"description\": \"Vegetable soup with pasta or rice\",\n            \"price\": 8.99,\n            \"quantity\": 30,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 150935000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 150935000\n            }\n        },\n        {\n            \"id\": \"a6244796-4f86-4082-bb4d-bfbbc2586730\",\n            \"name\": \"New test\",\n            \"description\": \"New description\",\n            \"price\": 3,\n            \"quantity\": 10,\n            \"created_at\": {\n                \"seconds\": 1685281273,\n                \"nanos\": 902771000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281373,\n                \"nanos\": 963939000\n            }\n        },\n        {\n            \"id\": \"28ea13d9-828a-45b9-a7e1-48b4a644a6ac\",\n            \"name\": \"Risotto\",\n            \"description\": \"Creamy rice dish cooked with broth, porcini mushrooms and pancetta\",\n            \"price\": 18.99,\n            \"quantity\": 10,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 150935000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 150935000\n            }\n        },\n        {\n            \"id\": \"2ef275c6-73d9-4d1f-92ed-4125bcd36fb9\",\n            \"name\": \"Spaghetti al ragù (alla Bolognese)\",\n            \"description\": \"Spaghetti pasta with a meaty tomato bolognese ragu\",\n            \"price\": 14.99,\n            \"quantity\": 5,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 150935000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 150935000\n            }\n        },\n        {\n            \"id\": \"3f5382d4-4a4f-4750-841e-8bf120195891\",\n            \"name\": \"Tiramisu\",\n            \"description\": \"Coffee-flavored dessert made with ladyfingers, mascarpone cheese, fresh eggs and cocoa powder\",\n            \"price\": 6.99,\n            \"quantity\": 10,\n            \"is_available\": true,\n            \"created_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 128558000\n            },\n            \"updated_at\": {\n                \"seconds\": 1685281152,\n                \"nanos\": 128558000\n            }\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "dish/create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"test\",\n    \"description\": \"some description\",\n    \"price\": 2.5,\n    \"quantity\": 5,\n    \"is_available\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/dish/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"dish",
+						"create"
+					]
+				},
+				"description": "Создание блюда. Данный метод можно использовать только пользователям с jwt роли менеджера."
+			},
+			"response": [
+				{
+					"name": "Создание блюда",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\",\n    \"description\": \"some description\",\n    \"price\": 2.5,\n    \"quantity\": 5,\n    \"is_available\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/dish/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"dish",
+								"create"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:41:13 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "258"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"id\": \"a6244796-4f86-4082-bb4d-bfbbc2586730\",\n    \"name\": \"test\",\n    \"description\": \"some description\",\n    \"price\": 2.5,\n    \"quantity\": 5,\n    \"is_available\": true,\n    \"created_at\": {\n        \"seconds\": 1685281273,\n        \"nanos\": 902771000\n    },\n    \"updated_at\": {\n        \"seconds\": 1685281273,\n        \"nanos\": 902771000\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "dish/:id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/dish/a6244796-4f86-4082-bb4d-bfbbc2586730",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"dish",
+						"a6244796-4f86-4082-bb4d-bfbbc2586730"
+					]
+				},
+				"description": "Просмотр блюда по uuid"
+			},
+			"response": [
+				{
+					"name": "Обращение к блюду по id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/dish/a6244796-4f86-4082-bb4d-bfbbc2586730",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"dish",
+								"a6244796-4f86-4082-bb4d-bfbbc2586730"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:41:39 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "258"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"id\": \"a6244796-4f86-4082-bb4d-bfbbc2586730\",\n    \"name\": \"test\",\n    \"description\": \"some description\",\n    \"price\": 2.5,\n    \"quantity\": 5,\n    \"is_available\": true,\n    \"created_at\": {\n        \"seconds\": 1685281273,\n        \"nanos\": 902771000\n    },\n    \"updated_at\": {\n        \"seconds\": 1685281273,\n        \"nanos\": 902771000\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "dish/update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"a6244796-4f86-4082-bb4d-bfbbc2586730\",\n    \"name\": \"New test\",\n    \"description\": \"New description\",\n    \"price\": 3,\n    \"quantity\": 10,\n    \"is_available\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/dish/update/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"dish",
+						"update",
+						""
+					]
+				},
+				"description": "Обновление блюда. UUID блюда надо положить в тело запроса"
+			},
+			"response": [
+				{
+					"name": "Обновление информации о блюде",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"a6244796-4f86-4082-bb4d-bfbbc2586730\",\n    \"name\": \"New test\",\n    \"description\": \"New description\",\n    \"price\": 3,\n    \"quantity\": 10,\n    \"is_available\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/dish/update/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"dish",
+								"update",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:42:26 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "260"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"id\": \"a6244796-4f86-4082-bb4d-bfbbc2586730\",\n    \"name\": \"New test\",\n    \"description\": \"New description\",\n    \"price\": 3,\n    \"quantity\": 10,\n    \"is_available\": true,\n    \"created_at\": {\n        \"seconds\": 1685281273,\n        \"nanos\": 902771000\n    },\n    \"updated_at\": {\n        \"seconds\": 1685281346,\n        \"nanos\": 134000000\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "dish/delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/dish/delete/a6244796-4f86-4082-bb4d-bfbbc2586730",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"dish",
+						"delete",
+						"a6244796-4f86-4082-bb4d-bfbbc2586730"
+					]
+				},
+				"description": "Удаление блюда, после удаления блюдо становится недоступным. Однако, разумеется, информация о нем в бд остается, так как клиентам и ресторану нужно знать что у него заказывали ранее."
+			},
+			"response": [
+				{
+					"name": "Удаление блюда",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/dish/delete/a6244796-4f86-4082-bb4d-bfbbc2586730",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"dish",
+								"delete",
+								"a6244796-4f86-4082-bb4d-bfbbc2586730"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 28 May 2023 13:42:53 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "240"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 200,\n    \"id\": \"a6244796-4f86-4082-bb4d-bfbbc2586730\",\n    \"name\": \"New test\",\n    \"description\": \"New description\",\n    \"price\": 3,\n    \"quantity\": 10,\n    \"created_at\": {\n        \"seconds\": 1685281273,\n        \"nanos\": 902771000\n    },\n    \"updated_at\": {\n        \"seconds\": 1685281373,\n        \"nanos\": 963939000\n    }\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{user_1_jwt}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Authorization",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
