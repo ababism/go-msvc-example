@@ -16,9 +16,9 @@ type User interface {
 	RegisterUser(userId uuid.UUID, user core.User) (core.User, error)
 	ChangeUsername(clientId uuid.UUID, username string) (core.User, error)
 	ChangeNickname(clientId uuid.UUID, nickname string) (core.User, error)
-	SearchUsers(query string, clientId uuid.UUID, limit int, offset int) ([]core.UserPayload, error)
+	SearchUsers(query string, clientId uuid.UUID, limit int, offset int) ([]core.User, error)
 	Exists(id uuid.UUID) bool
-	GetById(id uuid.UUID) (core.UserPayload, error)
+	GetById(id uuid.UUID) (core.User, error)
 	AddPlayerID(clientId uuid.UUID, playerID uuid.UUID) error
 	GetPlayerID(userId uuid.UUID) (string, error)
 	InitPlayerID() error

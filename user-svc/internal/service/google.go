@@ -7,8 +7,8 @@ import (
 	"golang.org/x/oauth2/google"
 )
 
+// InitializeOAuthGoogle конфигурация google Oauth2
 func InitializeOAuthGoogle() {
-	//GOOD
 	OauthConfGl.ClientID = viper.GetString("google.clientID")
 	logrus.Info(OauthConfGl.ClientID)
 	OauthConfGl.ClientSecret = viper.GetString("google.clientSecret")

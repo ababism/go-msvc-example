@@ -15,10 +15,16 @@ type UserService struct {
 	r repository.User
 }
 
+func NewUserService(repository repository.User) *UserService {
+	return &UserService{r: repository}
+}
+
+// InitPlayerID функция для связки полльзователя с апи нотификаций One signal
 func (s *UserService) InitPlayerID() error {
 	return s.r.InitPlayerID()
 }
 
+// GetPlayerID функция для получаения информации для нотификаций One signal
 func (s *UserService) GetPlayerID(userId uuid.UUID) (string, error) {
 	res, err := s.r.GetPlayerID(userId)
 	if err != nil {
@@ -27,6 +33,7 @@ func (s *UserService) GetPlayerID(userId uuid.UUID) (string, error) {
 	return res, nil
 }
 
+// AddPlayerID функция для добавления информации для нотификаций One signal
 func (s *UserService) AddPlayerID(clientId uuid.UUID, playerID uuid.UUID) error {
 	if !s.r.ExistsWithId(clientId) {
 		return core.ErrNotFound
@@ -35,28 +42,26 @@ func (s *UserService) AddPlayerID(clientId uuid.UUID, playerID uuid.UUID) error 
 	return err
 }
 
-func (s *UserService) GetById(id uuid.UUID) (core.UserPayload, error) {
-	user, err := s.r.GetById(id)
-	return user.ToPayload(), err
+// GetById получение пользователя по id
+func (s *UserService) GetById(id uuid.UUID) (core.User, error) {
+	return s.r.GetById(id)
 }
 
+// Exists существует ли пользователь по id
 func (s *UserService) Exists(id uuid.UUID) bool {
 	return s.r.ExistsWithId(id)
 }
 
-func (s *UserService) SearchUsers(query string, clientId uuid.UUID, limit int, offset int) (res []core.UserPayload, err error) {
+// SearchUsers поиск пользователей по запросу
+func (s *UserService) SearchUsers(query string, clientId uuid.UUID, limit int, offset int) (res []core.User, err error) {
 	users, err := s.r.SearchUsers(query, clientId, limit, offset)
 	if err != nil {
 		return
 	}
-	res = make([]core.UserPayload, len(users))
-	for i, user := range users {
-		uDomain := user.ToDomain()
-		res[i] = uDomain.ToPayload()
-	}
-	return res, nil
+	return users, nil
 }
 
+// ChangeNickname смена никнейма (не уникального)
 func (s *UserService) ChangeNickname(clientId uuid.UUID, nickname string) (core.User, error) {
 	if !s.validateNickname(nickname) {
 		return core.User{}, errors.New("username is invalid")
@@ -65,9 +70,10 @@ func (s *UserService) ChangeNickname(clientId uuid.UUID, nickname string) (core.
 	if err != nil {
 		return core.User{}, core.ErrInternal
 	}
-	return newClient.ToDomain(), nil
+	return newClient, nil
 }
 
+// ChangeUsername смена юзернейма (уникального)
 func (s *UserService) ChangeUsername(clientId uuid.UUID, username string) (core.User, error) {
 	tmpUser, err := s.r.GetByUsername(username)
 	if err == nil && tmpUser.IsRegistered {
@@ -80,12 +86,10 @@ func (s *UserService) ChangeUsername(clientId uuid.UUID, username string) (core.
 	if err != nil {
 		return core.User{}, core.ErrInternal
 	}
-	return newClient.ToDomain(), nil
+	return newClient, nil
 }
 
-func NewUserService(repository repository.User) *UserService {
-	return &UserService{r: repository}
-}
+// RegisterUser регистрация
 func (s *UserService) RegisterUser(id uuid.UUID, user core.User) (core.User, error) {
 	if ok, err := s.validateUserFields(user); err != nil {
 		return core.User{}, err
@@ -95,9 +99,10 @@ func (s *UserService) RegisterUser(id uuid.UUID, user core.User) (core.User, err
 
 	user.Id = id
 	u, err := s.r.Register(user)
-	return u.ToDomain(), err
+	return u, err
 }
 
+// validateUserFields валидация полей
 func (s *UserService) validateUserFields(user core.User) (bool, error) {
 	_, err := s.r.GetByUsername(user.Username)
 	if err == nil {

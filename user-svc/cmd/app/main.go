@@ -6,9 +6,9 @@ import (
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 	"net"
-	grpct "user-svc/internal/grpc"
 	"user-svc/internal/repository"
 	"user-svc/internal/service"
+	grpct "user-svc/internal/transport/grpc"
 	"user-svc/pkg/pb"
 )
 
@@ -16,7 +16,7 @@ func main() {
 	// Логирование и viper
 	logrus.SetFormatter(new(logrus.JSONFormatter))
 	initViperConfig()
-
+	// подключаем постгрес
 	db, err := repository.NewPostgresDB(repository.Config{
 		Host:     viper.GetString("db.host"),
 		Port:     viper.GetString("db.port"),
@@ -38,8 +38,12 @@ func main() {
 	}
 	fmt.Println("Auth Svc on", viper.GetString("port"))
 
+	// инициализируем трехслойную чистую архитектуру
+	// репозиторий
 	repos := repository.New(db)
+	// бизнес-логика
 	services := service.NewService(repos)
+	// транспортный слой
 	handlers := grpct.NewHandler(services)
 
 	grpcServer := grpc.NewServer()
@@ -49,9 +53,6 @@ func main() {
 	if err = grpcServer.Serve(lis); err != nil {
 		logrus.Fatalln("Failed to serve:", err)
 	}
-	//if err = srv.Run(viper.GetString("port"), handlers.InitRoutes()); err != nil {
-	//	logrus.Fatalf("error loading env variables: %s", err.Error())
-	//}
 }
 
 func initViperConfig() {

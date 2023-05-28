@@ -1,8 +1,9 @@
-package core
+package dao
 
 import (
 	"database/sql"
 	"github.com/google/uuid"
+	"user-svc/internal/core"
 )
 
 type UserDAO struct {
@@ -22,7 +23,7 @@ type UserNullableDAO struct {
 	Role         string         `db:"role"`
 }
 
-func (u *UserDAO) ToDomain() (user User) {
+func (u *UserDAO) ToDomain() (user core.User) {
 	user.Id = u.Id
 	user.Gmail = u.Gmail
 	user.Username = u.Username
@@ -31,7 +32,7 @@ func (u *UserDAO) ToDomain() (user User) {
 	user.Role = u.Role
 	return
 }
-func (u *UserNullableDAO) ToDomain() (user User) {
+func (u *UserNullableDAO) ToDomain() (user core.User) {
 	user.Id = u.Id
 	user.Gmail = u.Gmail
 	if u.Username.Valid {

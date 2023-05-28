@@ -10,6 +10,7 @@ import (
 	"user-svc/internal/repository"
 )
 
+// TokenService -- сервис для работы с jwt, он привязан к репозиторию пользователей для проверок
 type TokenService struct {
 	userRepo repository.User
 }
@@ -41,6 +42,7 @@ func NewTokenService(userRepo repository.User) *TokenService {
 	return &TokenService{userRepo: userRepo}
 }
 
+// GetJWT дает jwt, в обмен на почту пользователя.
 func (s *TokenService) GetJWT(gmail string) (core.JWT, error) {
 	if !s.userRepo.Exists(gmail) {
 		userId, err := s.userRepo.Create(gmail)
@@ -56,6 +58,7 @@ func (s *TokenService) GetJWT(gmail string) (core.JWT, error) {
 	return s.GenerateJWT(user.Id, user.IsRegistered, user.Role)
 }
 
+// GenerateJWT генерирует jwt, из нужных параметров
 func (s *TokenService) GenerateJWT(userId uuid.UUID, registered bool, role string) (core.JWT, error) {
 	if registered {
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, &tokenClaims{
@@ -82,6 +85,7 @@ func (s *TokenService) GenerateJWT(userId uuid.UUID, registered bool, role strin
 	}
 }
 
+// ParseToken проверяет jwt, в случае успешной проверки отдает актульную информацию о пользователе
 func (s *TokenService) ParseToken(token string) (uuid.UUID, bool, string, error) {
 	t, err := jwt.ParseWithClaims(token, &tokenClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

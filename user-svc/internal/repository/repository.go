@@ -16,12 +16,12 @@ type User interface {
 	Create(gmail string) (uuid.UUID, error)
 	Exists(gmail string) bool
 	GetById(userId uuid.UUID) (user core.User, err error)
-	GetByUsername(username string) (core.UserDAO, error)
+	GetByUsername(username string) (core.User, error)
 	GetByGmail(gmail string) (user core.User, err error)
-	Register(u core.User) (user core.UserDAO, err error)
-	ChangeUsername(id uuid.UUID, username string) (user core.UserDAO, err error)
-	ChangeNickname(id uuid.UUID, nickname string) (user core.UserDAO, err error)
-	SearchUsers(query string, clientId uuid.UUID, limit int, offset int) ([]core.UserDAO, error)
+	Register(u core.User) (user core.User, err error)
+	ChangeUsername(id uuid.UUID, username string) (user core.User, err error)
+	ChangeNickname(id uuid.UUID, nickname string) (user core.User, err error)
+	SearchUsers(query string, clientId uuid.UUID, limit int, offset int) ([]core.User, error)
 	ExistsWithId(id uuid.UUID) bool
 	InstallAppID(clientId uuid.UUID, playerID uuid.UUID) error
 	GetPlayerID(userId uuid.UUID) (string, error)

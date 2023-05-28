@@ -12,6 +12,7 @@ var (
 	GoogleAuth *oauth2.Service
 )
 
+// GetGmail перед Email из verifyIdToken
 func GetGmail(idToken string) (string, error) {
 	tokenInfo, err := verifyIdToken(idToken)
 	if err != nil {
@@ -20,6 +21,8 @@ func GetGmail(idToken string) (string, error) {
 	return tokenInfo.Email, nil
 }
 
+// verifyIdToken обращается к серверам Google, чтобы подтвердить аунтификацю с Google Sign-Up через id_token
+// и выдать информацию о пользователе присланную Google
 func verifyIdToken(idToken string) (*oauth2.Tokeninfo, error) {
 	tokenInfoCall := GoogleAuth.Tokeninfo()
 	tokenInfoCall.IdToken(idToken)

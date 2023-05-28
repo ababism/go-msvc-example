@@ -7,6 +7,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/sirupsen/logrus"
 	"user-svc/internal/core"
+	"user-svc/internal/repository/dao"
 )
 
 type UserRepository struct {
@@ -73,7 +74,8 @@ func (r UserRepository) ExistsWithId(id uuid.UUID) (res bool) {
 	return res
 }
 
-func (r UserRepository) SearchUsers(query string, clientId uuid.UUID, limit int, offset int) (users []core.UserDAO, err error) {
+func (r UserRepository) SearchUsers(query string, clientId uuid.UUID, limit int, offset int) (res []core.User, err error) {
+	var users []dao.UserDAO
 	q := `
 	SELECT *
 		FROM users
@@ -83,6 +85,10 @@ func (r UserRepository) SearchUsers(query string, clientId uuid.UUID, limit int,
 	`
 	logrus.Trace(formatQuery(q))
 	err = r.db.Select(&users, q, query, limit, offset)
+	res = make([]core.User, len(users))
+	for i, v := range users {
+		res[i] = v.ToDomain()
+	}
 	return
 }
 
@@ -121,7 +127,7 @@ func (r UserRepository) GetById(userId uuid.UUID) (core.User, error) {
 	SELECT * FROM users WHERE id = $1
 	`
 	logrus.Trace(formatQuery(q))
-	var user core.UserNullableDAO
+	var user dao.UserNullableDAO
 	err := r.db.Get(&user, q, userId)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
@@ -132,16 +138,17 @@ func (r UserRepository) GetById(userId uuid.UUID) (core.User, error) {
 	return user.ToDomain(), nil
 }
 
-func (r UserRepository) GetByUsername(username string) (user core.UserDAO, err error) {
+func (r UserRepository) GetByUsername(username string) (res core.User, err error) {
+	var user dao.UserDAO
 	q := `
 	SELECT * FROM users WHERE username = $1
 	`
 	logrus.Trace(formatQuery(q))
 	err = r.db.Get(&user, q, username)
 	if err != nil {
-		return core.UserDAO{}, err
+		return core.User{}, err
 	}
-	return user, nil
+	return user.ToDomain(), nil
 }
 
 func (r UserRepository) GetByGmail(gmail string) (core.User, error) {
@@ -149,7 +156,7 @@ func (r UserRepository) GetByGmail(gmail string) (core.User, error) {
 	SELECT * FROM users WHERE gmail = $1
 	`
 	logrus.Trace(formatQuery(q))
-	var user core.UserNullableDAO
+	var user dao.UserNullableDAO
 	err := r.db.Get(&user, q, gmail)
 	//row := r.db.QueryRow(q, gmail)
 	//err = row.Scan(&user)
@@ -159,7 +166,8 @@ func (r UserRepository) GetByGmail(gmail string) (core.User, error) {
 	return user.ToDomain(), nil
 }
 
-func (r UserRepository) Register(u core.User) (user core.UserDAO, err error) {
+func (r UserRepository) Register(u core.User) (res core.User, err error) {
+	var user dao.UserDAO
 	q := `
 	UPDATE users
 	SET (username, nickname, is_registered, role) = ($1, $2, true, $4)
@@ -170,10 +178,12 @@ func (r UserRepository) Register(u core.User) (user core.UserDAO, err error) {
 	//row := r.db.QueryRow(q, u.Username, u.Nickname, u.Id)
 	//err = row.Scan(&user)
 	err = r.db.Get(&user, q, u.Username, u.Nickname, u.Id, u.Role)
-	return user, err
+	res = user.ToDomain()
+	return
 }
 
-func (r UserRepository) ChangeUsername(userId uuid.UUID, username string) (user core.UserDAO, err error) {
+func (r UserRepository) ChangeUsername(userId uuid.UUID, username string) (res core.User, err error) {
+	var user dao.UserDAO
 	q := `
 	UPDATE users
 	SET username = $1
@@ -182,9 +192,11 @@ func (r UserRepository) ChangeUsername(userId uuid.UUID, username string) (user 
 	`
 	logrus.Trace(formatQuery(q))
 	err = r.db.Get(&user, q, username, userId)
+	res = user.ToDomain()
 	return
 }
-func (r UserRepository) ChangeNickname(userId uuid.UUID, nickname string) (user core.UserDAO, err error) {
+func (r UserRepository) ChangeNickname(userId uuid.UUID, nickname string) (res core.User, err error) {
+	var user dao.UserDAO
 	q := `
 	UPDATE users
 	SET nickname = $1
@@ -193,5 +205,6 @@ func (r UserRepository) ChangeNickname(userId uuid.UUID, nickname string) (user 
 	`
 	logrus.Trace(formatQuery(q))
 	err = r.db.Get(&user, q, nickname, userId)
+	res = user.ToDomain()
 	return
 }

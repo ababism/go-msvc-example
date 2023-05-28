@@ -18,6 +18,8 @@ var (
 	ErrAlreadyExists = errors.New("element already exists")
 )
 
+// нужно для лучшей обрабоки ошибок, но в рамках этого задания не стал использовать
+// можно обойти и http статус кодами
 const (
 	CodeTokenInvalid  = 1
 	CodeIncorrectBody = 2
