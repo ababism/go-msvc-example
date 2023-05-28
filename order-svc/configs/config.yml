@@ -1,0 +1,11 @@
+port: ":8083"
+
+db:
+  host: "localhost"
+  port: "5434"
+  username: "postgres"
+  password: "password"
+  dbname: "postgres"
+  sslmode: "disable"
+
+signing_key: "jj@&48w3#ksSFpawd!W@SODFDKsskdajwdfgvc@%56ds"

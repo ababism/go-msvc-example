@@ -1,0 +1,165 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+//import "github.com/google/uuid/uuid.proto";
+
+package proto;
+
+option go_package = "./pkg/pb/";
+
+message Order {
+  //  google.protobuf.UUID id = 1;
+  //  google.protobuf.UUID user_id = 2;
+  string id = 1;
+  string user_id = 2;
+  string order_status = 3;
+  string special_requests = 4;
+  google.protobuf.Timestamp ready_at = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+}
+
+message Dish {
+  //  google.protobuf.UUID id = 1;
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  int64 quantity = 5;
+  bool is_available = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+service OrderService {
+  rpc GetAllDishes(GetAllDishRequest) returns (GetAllDishResponse) {}
+  rpc CreateDish(CreateDishRequest) returns (CreateDishResponse) {}
+  rpc GetDish(GetDishRequest) returns (GetDishResponse) {}
+  rpc UpdateDish(UpdateDishRequest) returns (UpdateDishResponse) {}
+  rpc DeleteDish(DeleteDishRequest) returns (DeleteDishResponse) {}
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse) {}
+  rpc GetOrder(GetOrderRequest) returns (GetOrderResponse) {}
+}
+message GetAllDishRequest {
+  int64 limit = 1;
+  int64 offset = 2;
+}
+
+message GetAllDishResponse {
+  int64 status = 1;
+  string error = 2;
+  repeated Dish dishes = 3;
+}
+
+message CreateDishRequest {
+  string name = 1;
+  string description = 2;
+  double price = 3;
+  int64 quantity = 4;
+  bool is_available = 5;
+}
+
+message CreateDishResponse {
+  int64 status = 1;
+  string error = 2;
+  string id = 3;
+  string name = 4;
+  string description = 5;
+  double price = 6;
+  int64 quantity = 7;
+  bool is_available = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+message GetDishRequest {
+  string id = 1;
+}
+
+message GetDishResponse {
+  int64 status = 1;
+  string error = 2;
+  string id = 3;
+  string name = 4;
+  string description = 5;
+  double price = 6;
+  int64 quantity = 7;
+  bool is_available = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+message UpdateDishRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  double price = 4;
+  int64 quantity = 5;
+  bool is_available = 6;
+}
+
+message UpdateDishResponse {
+  int64 status = 1;
+  string error = 2;
+  string id = 3;
+  string name = 4;
+  string description = 5;
+  double price = 6;
+  int64 quantity = 7;
+  bool is_available = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+message DeleteDishRequest {
+  string id = 1;
+}
+
+message DeleteDishResponse {
+  int64 status = 1;
+  string error = 2;
+  string id = 3;
+  string name = 4;
+  string description = 5;
+  double price = 6;
+  int64 quantity = 7;
+  bool is_available = 8;
+  google.protobuf.Timestamp created_at = 9;
+  google.protobuf.Timestamp updated_at = 10;
+}
+
+message CreateOrderRequest {
+  repeated Dish dishes = 1;
+  string user_id = 2;
+  string special_requests = 3;
+}
+
+message CreateOrderResponse {
+  int64 status = 1;
+  string error = 2;
+  string id = 3;
+  repeated Dish dishes = 4;
+  string user_id = 5;
+  string order_status = 6;
+  string special_requests = 7;
+  google.protobuf.Timestamp ready_at = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+message GetOrderRequest {
+  string id = 1;
+}
+
+message GetOrderResponse {
+  int64 status = 1;
+  string error = 2;
+  string id = 3;
+  repeated Dish dishes = 4;
+  string user_id = 5;
+  string order_status = 6;
+  string special_requests = 7;
+  google.protobuf.Timestamp ready_at = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+}
