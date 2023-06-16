@@ -1,8 +1,12 @@
 port: ":8083"
 
 db:
-  host: "localhost"
-  port: "5434"
+  #  without docker
+  #  host: "localhost"
+  #  port: "5434"
+
+  host: "order_db"
+  port: "5432"
   username: "postgres"
   password: "password"
   dbname: "postgres"
